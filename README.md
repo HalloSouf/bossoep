@@ -1,0 +1,2 @@
+# bossoep
+Simple Discord bot
