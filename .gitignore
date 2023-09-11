@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Production
+build/
+.env
+
+# Package manager
+yarn-error.log
+package-lock.json
+pnpm-lock.yml
+
+# Misc
+.vscode/
+.fleet/
+.idea/
+.DS_Store

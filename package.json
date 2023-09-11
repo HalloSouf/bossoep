@@ -1,0 +1,30 @@
+{
+  "name": "bossoep",
+  "version": "1.0.0",
+  "description": "Open-source Discord bot for handling basic features.",
+  "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HalloSouf/bossoep.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HalloSouf/bossoep/issues"
+  },
+  "author": "HalloSouf",
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "tsc --build",
+    "start": "tsc && node build/index.js",
+    "watch": "tsc --watch",
+    "dev": "node --watch build/index.js",
+    "lint": "prettier --check . && eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "prettier": "^3.0.3"
+  }
+}
