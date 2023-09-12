@@ -1,6 +1,8 @@
 import {
+  ActivityType,
   GatewayDispatchEvents,
   GatewayReadyDispatchData,
+  PresenceUpdateStatus,
   WithIntrinsicProps
 } from '@discordjs/core';
 import GatewayEvent from '../../structures/GatewayEvent';
@@ -32,6 +34,13 @@ class Ready extends GatewayEvent<GatewayReadyDispatchData> {
       '🎛️ Client ID': payload.data.user.id,
       '👷 Username': `${payload.data.user.username}#${payload.data.user.discriminator}`,
       '🗺️ Gateway URL': payload.data.resume_gateway_url
+    });
+
+    await this.client.updatePresence(0, {
+      since: Date.now(),
+      activities: [{ name: 'Mario kart', type: ActivityType.Competing }],
+      afk: false,
+      status: PresenceUpdateStatus.Online
     });
   }
 }
