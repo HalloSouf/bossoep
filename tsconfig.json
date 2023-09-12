@@ -23,6 +23,8 @@
     // Interop Constraints
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "ignoreDeprecations": "5.0",
 
     // Language and Environment
     "emitDecoratorMetadata": true,

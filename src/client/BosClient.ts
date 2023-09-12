@@ -1,7 +1,9 @@
 import { WebSocketManager } from '@discordjs/ws';
 import { REST, DiscordAPIError } from '@discordjs/rest';
 import type { IClientOptions } from '../types/client.interface';
-import { GatewayIntentBits, Client } from '@discordjs/core';
+import { Client } from '@discordjs/core';
+import EventManager from '../managers/EventManager';
+import { join } from 'path';
 
 /**
  * Represents a Discord client with additional functionality.
@@ -21,6 +23,12 @@ class BosClient extends Client {
   public gateway: WebSocketManager;
 
   /**
+   * The event manager for handling events.
+   * @type {EventManager}
+   */
+  public events: EventManager = new EventManager(this);
+
+  /**
    * Creates a new instance of the BosClient class.
    * @param opts - The options to use when creating the client.
    */
@@ -37,6 +45,8 @@ class BosClient extends Client {
 
     this.rest = rest;
     this.gateway = ws;
+
+    this.events.register(join(__dirname, './events'));
   }
 
   /**
