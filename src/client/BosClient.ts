@@ -4,6 +4,7 @@ import type { IClientOptions } from '../types/client.interface';
 import { Client } from '@discordjs/core';
 import EventManager from '../managers/EventManager';
 import { join } from 'path';
+import CommandManager from '../managers/CommandManager';
 
 /**
  * Represents a Discord client with additional functionality.
@@ -29,14 +30,21 @@ class BosClient extends Client {
   public events: EventManager = new EventManager(this);
 
   /**
+   * The command manager for handling commands.
+   * @type {CommandManager}
+   */
+  public commands: CommandManager = new CommandManager(this);
+
+  /**
    * Creates a new instance of the BosClient class.
-   * @param opts - The options to use when creating the client.
+   * @param {IClientOptions} opts - The options to use when creating the client.
    */
   constructor(opts: IClientOptions) {
-    const rest = new REST({ version: opts.restVersion });
+    const rest = new REST({ version: opts.restVersion})
+      .setToken(opts.token);
 
     const ws = new WebSocketManager({
-      token: '',
+      token: opts.token,
       intents: opts.intents,
       rest
     });
@@ -47,21 +55,18 @@ class BosClient extends Client {
     this.gateway = ws;
 
     this.events.register(join(__dirname, './events'));
+    this.commands.load(join(__dirname, './commands'));
   }
 
   /**
    * Authorizes the client with the provided token.
-   * @param {string} token - The token to use for authorization.
-   * @returns A masked version of the token used for authorization.
+   * @returns {Promise<boolean>} A promise that resolves with a boolean indicating whether the client was authorized.
    * @throws An error if the provided token is invalid.
    */
-  public async authorize(token: string): Promise<string> {
+  public async authorize(): Promise<boolean> {
     try {
-      this.rest.setToken(token);
-      this.gateway.options.token = token;
-
       await this.gateway.connect();
-      return `${token.slice(0, 6)}.****`;
+      return true;
     } catch (e: unknown) {
       if (e instanceof DiscordAPIError) {
         if (e.status === 401) {

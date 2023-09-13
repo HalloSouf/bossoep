@@ -30,10 +30,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["ESNext", "ES2022", "dom"],
-    "target": "ES2022",
+    "target": "ESNext",
     "useDefineForClassFields": true,
 
     // Completeness
     "skipLibCheck": true
-  }
+  },
+  "include": ["./src/**/*"]
 }

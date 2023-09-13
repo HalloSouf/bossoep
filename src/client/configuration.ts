@@ -6,6 +6,7 @@ insertEnv();
 const config: IConfig = {
   restVersion: process.env.REST_VERSION || '10',
   token: process.env.CLIENT_TOKEN || '',
+  clientId: process.env.CLIENT_ID || '',
   intents:
     GatewayIntentBits.MessageContent |
     GatewayIntentBits.GuildMessages |

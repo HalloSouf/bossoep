@@ -4,4 +4,5 @@ export interface IConfig {
   token: string;
   restVersion: string;
   intents: 0 | GatewayIntentBits;
+  clientId: string;
 }
