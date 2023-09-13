@@ -4,6 +4,7 @@ export interface IClientOptions {
   restVersion: string;
   intents: 0 | GatewayIntentBits;
   token: string;
+  clientId: string;
 }
 
 export interface IGatewayEventOptions {

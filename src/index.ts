@@ -6,7 +6,8 @@ const logger = new Logger();
 const client = new BosClient({
   restVersion: config.restVersion,
   intents: config.intents,
-  token: config.token
+  token: config.token,
+  clientId: config.clientId
 });
 
 client

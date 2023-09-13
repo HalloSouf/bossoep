@@ -31,6 +31,8 @@ class Ready extends GatewayEvent<GatewayReadyDispatchData> {
    * @returns {Promise<void>} A promise that resolves when the event is emitted.
    */
   public async emit(payload: WithIntrinsicProps<GatewayReadyDispatchData>): Promise<void> {
+    this.client.user = payload.data.user;
+
     Logger.appReady(Math.round(process.uptime()), {
       '🎛️ Client ID': payload.data.user.id,
       '👷 Username': `${payload.data.user.username}#${payload.data.user.discriminator}`,

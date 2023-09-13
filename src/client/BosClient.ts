@@ -1,7 +1,7 @@
 import { WebSocketManager } from '@discordjs/ws';
 import { REST, DiscordAPIError } from '@discordjs/rest';
 import type { IClientOptions } from '../types/client.interface';
-import { Client } from '@discordjs/core';
+import { APIUser, Client, GatewayReadyDispatchData, WithIntrinsicProps } from '@discordjs/core';
 import EventManager from '../managers/EventManager';
 import { join } from 'path';
 import CommandManager from '../managers/CommandManager';
@@ -36,6 +36,18 @@ class BosClient extends Client {
   public commands: CommandManager = new CommandManager(this);
 
   /**
+   * The options used when creating the client.
+   * @type {IClientOptions}
+   */
+  public opts: IClientOptions;
+
+  /**
+   * User information for the client.
+   * @type {APIUser}
+   */
+  public user: APIUser | undefined;
+
+  /**
    * Creates a new instance of the BosClient class.
    * @param {IClientOptions} opts - The options to use when creating the client.
    */
@@ -53,6 +65,7 @@ class BosClient extends Client {
 
     this.rest = rest;
     this.gateway = ws;
+    this.opts = opts;
 
     this.events.register(join(__dirname, './events'));
     this.commands.load(join(__dirname, './commands'));
