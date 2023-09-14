@@ -23,18 +23,25 @@ class Ping extends Command {
    * @param {WithIntrinsicProps<GatewayInteractionCreateDispatchData>} payload - The data payload for the command.
    * @returns {Promise<void>} A promise that resolves when the command is executed.
    */
-  public async exec(payload: WithIntrinsicProps<GatewayInteractionCreateDispatchData>): Promise<void> {
+  public async exec(
+    payload: WithIntrinsicProps<GatewayInteractionCreateDispatchData>
+  ): Promise<void> {
     await payload.api.interactions.reply(payload.data.id, payload.data.token, {
-      embeds: [{
-        title: '🏓 Pong!',
-        description: 'Just took a world trip within.',
-        footer: {
-          text: this.client.user?.username || '',
-          icon_url: this.client.rest.cdn.avatar(this.client.user?.id || '', this.client.user?.avatar || '')
-        },
-        timestamp: new Date().toISOString(),
-        color: 0x3498db
-      }]
+      embeds: [
+        {
+          title: '🏓 Pong!',
+          description: 'Just took a world trip within.',
+          footer: {
+            text: this.client.user?.username || '',
+            icon_url: this.client.rest.cdn.avatar(
+              this.client.user?.id || '',
+              this.client.user?.avatar || ''
+            )
+          },
+          timestamp: new Date().toISOString(),
+          color: 0x3498db
+        }
+      ]
     });
   }
 }

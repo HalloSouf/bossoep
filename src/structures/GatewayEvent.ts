@@ -5,7 +5,7 @@ import type { WithIntrinsicProps } from '@discordjs/core';
 /**
  * Represents a Discord Gateway event.
  */
-class GatewayEvent<T> {
+abstract class GatewayEvent<T> {
   /**
    * The Discord client instance for the event.
    */
@@ -30,9 +30,7 @@ class GatewayEvent<T> {
    * Emits the event.
    * @param {WithIntrinsicProps<T>} payload - The data payload for the event.
    */
-  public async emit(payload: WithIntrinsicProps<T>): Promise<void> {
-    throw new Error('The emit method must be implemented.');
-  }
+  public abstract emit(payload: WithIntrinsicProps<T>): Promise<void>;
 }
 
 export default GatewayEvent;

@@ -1,7 +1,7 @@
 import { WebSocketManager } from '@discordjs/ws';
 import { REST, DiscordAPIError } from '@discordjs/rest';
 import type { IClientOptions } from '../types/client.interface';
-import { APIUser, Client, GatewayReadyDispatchData, WithIntrinsicProps } from '@discordjs/core';
+import { APIUser, Client } from '@discordjs/core';
 import EventManager from '../managers/EventManager';
 import { join } from 'path';
 import CommandManager from '../managers/CommandManager';
@@ -52,8 +52,7 @@ class BosClient extends Client {
    * @param {IClientOptions} opts - The options to use when creating the client.
    */
   constructor(opts: IClientOptions) {
-    const rest = new REST({ version: opts.restVersion})
-      .setToken(opts.token);
+    const rest = new REST({ version: opts.restVersion }).setToken(opts.token);
 
     const ws = new WebSocketManager({
       token: opts.token,
