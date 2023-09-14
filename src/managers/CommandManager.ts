@@ -1,9 +1,9 @@
-import type { ICommand } from '../types/utils.interface';
 import type BosClient from '../client/BosClient';
 import { readdirSync } from 'fs';
 import Logger from 'hallo-logger';
 import { Routes } from '@discordjs/core';
 import config from '../client/configuration';
+import type Command from '../structures/Command';
 
 /**
  * Manages Discord commands for the client.
@@ -17,8 +17,12 @@ class CommandManager {
   /**
    * The map of registered commands.
    */
-  private commands: Map<string, ICommand> = new Map();
+  private commands: Map<string, Command> = new Map();
 
+  /**
+   * The logger for the command manager.
+   * @type {Logger}
+   */
   private logger: Logger = new Logger({ prefix: 'Commands' });
 
   /**
@@ -32,17 +36,17 @@ class CommandManager {
   /**
    * Gets a registered command by name.
    * @param {string} name - The name of the command to get.
-   * @returns {ICommand | undefined} The command with the specified name, or undefined if not found.
+   * @returns {Command | undefined} The command with the specified name, or undefined if not found.
    */
-  public get(name: string): ICommand | undefined {
+  public get(name: string): Command | undefined {
     return this.commands.get(name);
   }
 
   /**
    * Gets all registered commands.
-   * @returns {Map<string, ICommand>} A map of all registered commands.
+   * @returns {Map<string, Command>} A map of all registered commands.
    */
-  public get all(): Map<string, ICommand> {
+  public get all(): Map<string, Command> {
     return this.commands;
   }
 
@@ -58,7 +62,7 @@ class CommandManager {
 
       for (const file of files) {
         const CommandFile = require(`${path}/${subDir}/${file}`).default;
-        const command: ICommand = new CommandFile(this.client);
+        const command: Command = new CommandFile(this.client);
 
         if (command.data.name && typeof command.data.name === 'string') {
           if (this.commands.get(command.data.name))
@@ -77,7 +81,7 @@ class CommandManager {
   private async register(): Promise<void> {
     try {
       await this.client.rest.put(Routes.applicationCommands(config.clientId), {
-        body: Array.from(this.commands.values()).map((command: ICommand) => command.data)
+        body: Array.from(this.commands.values()).map((command: Command) => command.data)
       });
 
       this.logger.info(`${this.commands.size} application commands are registered.`);

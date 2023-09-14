@@ -1,4 +1,4 @@
-import { GatewayDispatchEvents, WithIntrinsicProps, type GatewayInteractionCreateDispatchData } from '@discordjs/core';
+import { GatewayDispatchEvents, WithIntrinsicProps, type GatewayInteractionCreateDispatchData, APIChatInputApplicationCommandInteractionData } from '@discordjs/core';
 import GatewayEvent from '../../structures/GatewayEvent';
 import type BosClient from '../BosClient';
 
@@ -24,17 +24,10 @@ class InteractionCreate extends GatewayEvent<GatewayInteractionCreateDispatchDat
    * @returns {Promise<void>} A promise that resolves when the event is emitted.
    */
   public async emit(payload: WithIntrinsicProps<GatewayInteractionCreateDispatchData>): Promise<void> {
-    await payload.api.interactions.reply(payload.data.id, payload.data.token, {
-      embeds: [{
-        title: '🏓 Pong!',
-        description: 'Just took a world trip within.',
-        footer: {
-          text: this.client.user?.username || '',
-          icon_url: this.client.rest.cdn.avatar(this.client.user?.id || '', this.client.user?.avatar || '')
-        },
-        timestamp: new Date().toISOString()
-      }]
-    });
+    if (!payload.data.data) return;
+
+    const command = this.client.commands.get((payload.data.data as APIChatInputApplicationCommandInteractionData).name);
+    if (command) command.exec(payload);
   }
 }
 
