@@ -40,11 +40,16 @@ yarn install
 npm install
 ```
 
+After installing the dependencies, you're ready to setup some environment variables. The repository contains a `.env.example` file which you can rename to `.env`. In this file you can set for example your client token & ID.
+
 ## Run project 🚀
 
-Now you have installed all the required dependencies, you are ready to start your development environment on your local machine.
+Now you have installed all the required dependencies & setting up your environment variables, you are ready to start your development environment on your local machine.
 
 ```bash
+# Build project
+yarn build
+
 # With yarn
 yarn dev
 
