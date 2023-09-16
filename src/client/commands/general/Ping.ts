@@ -1,6 +1,6 @@
 import type { GatewayInteractionCreateDispatchData, WithIntrinsicProps } from '@discordjs/core';
 import Command from '../../../structures/Command';
-import type BosClient from 'src/client/BosClient';
+import type BosClient from '../../../client/BosClient';
 
 /**
  * Represents the Ping command.
